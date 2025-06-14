@@ -1,0 +1,69 @@
+modules = ["python-3.11", "postgresql-16"]
+
+[nix]
+channel = "stable-24_05"
+packages = ["expat", "libxcrypt", "pkg-config", "xsimd"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Satellite Pipeline"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "satellite_pipeline"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "API Server"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Optimized Pipeline"
+
+[[workflows.workflow]]
+name = "Satellite Pipeline"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python main.py"
+
+[[workflows.workflow]]
+name = "satellite_pipeline"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pip install requests rasterio numpy scipy pathlib datetime logging zipfile tempfile io json && python main.py"
+
+[[workflows.workflow]]
+name = "API Server"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python api_server.py"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Optimized Pipeline"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python main.py"
+
+[deployment]
+run = ["sh", "-c", "python main.py"]
+
+[[ports]]
+localPort = 5000
+externalPort = 80
