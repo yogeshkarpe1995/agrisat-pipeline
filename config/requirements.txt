@@ -1,0 +1,23 @@
+
+# Core dependencies
+flask>=3.1.1
+flask-cors>=6.0.0
+numpy>=2.3.0
+rasterio>=1.4.3
+requests>=2.32.4
+scipy>=1.15.3
+sqlalchemy>=2.0.41
+
+# Database
+psycopg2-binary>=2.9.10
+
+# Additional dependencies for satellite processing
+google-auth-oauthlib>=1.0.0
+Pillow>=10.0.0
+
+# Development and testing
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Optional: For better performance
+#numba>=0.57.0
